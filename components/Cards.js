@@ -25,17 +25,16 @@
 import axios from 'axios'
 
 axios.get('https://lambda-times-api.herokuapp.com/articles').then((res)=> { 
-    console.log(res.data)
-    // res.data.articles.forEach(element => {
-    //     console.log(element)
-    //     cardContainer.appendChild(cardMaker(element))
-    // });
+    console.log(res.data.articles)
 
+    const keys = Object.keys(res.data.articles)
 
-    for ( const prop in res.data.articles) {
-        
-        cardContainer.appendChild(cardMaker(prop))
-    }
+    keys.forEach(element => {
+        res.data.articles[element].map((article) =>{
+            cardContainer.appendChild(cardMaker(article, element))
+        })
+
+    });
 
 })
 
@@ -66,7 +65,7 @@ function cardMaker(obj) {
     //populate nodes 
     headline.textContent = obj.headline
     img.src = obj.authorPhoto
-    span.textContent = obj['authorName']
+    span.textContent = obj.authorName
 
 
     //event listenr
